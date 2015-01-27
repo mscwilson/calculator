@@ -29,10 +29,9 @@ class MainWindow(tk.Frame):
 
     def take_inputs(self):
 
-        # This is an ugly way to only have one keyboard binding active at a time
+        # Setting bindings so that only have one keyboard binding active at a time
         # Otherwise get two of each entry when inserting directly into the Entry box
         # Bound Key and Shift+Key separately to avoid inserting eg (9 or *8
-        # Kept these definitions without (if focus on parent) as otherwise below if didn't know what make_binding was
         self.make_binding = self.parent.bind("<Key>", lambda event: self.button.keyboard(event))
         self.make_binding2 = self.parent.bind("<Shift-Key>", lambda event: self.button.keyboard(event))
         #print "bound to keyboard"

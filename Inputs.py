@@ -29,10 +29,11 @@ class Inputs(object):
         # This is tidying up Entry and/or Label
         if self.error == 0:
             # This clears the input area after a calculation has been made
-            if self.widgets.equals_was_last_key_pressed is True and self.widgets.button_pressed.get() == "=" and "ANS" in self.widgets.entry_box.get():
+            if self.widgets.equals_was_last_key_pressed is True and self.widgets.button_pressed.get() == "=" \
+                    and "ANS" in self.widgets.entry_box.get():
                 print "ANS with repeated equals"
-            elif self.widgets.equals_was_last_key_pressed is True and (self.widgets.button_pressed.get() != "DEL"
-                    and self.widgets.button_pressed.get() != "<" and self.widgets.button_pressed.get() != ">"):
+            elif self.widgets.equals_was_last_key_pressed is True and \
+                            self.widgets.button_pressed.get() not in ("DEL", "<", ">"):
                 print "clearing everything after = press"
                 self.widgets.entry_box.delete(0, tk.END)
                 self.widgets.result_stringvar.set("")
@@ -45,8 +46,7 @@ class Inputs(object):
         # Normal button press:
         if (self.widgets.button_pressed.get() not in self.widgets.special_buttons) and self.error == 0:
             if (self.final_result != False) and (self.widgets.equals_was_last_key_pressed is True) \
-                    and (self.widgets.button_pressed.get() not in self.widgets.digit_buttons) \
-                    and (self.widgets.button_pressed.get() != "x10^" and self.widgets.button_pressed.get() != "("):
+                    and (self.widgets.button_pressed.get() not in (self.widgets.digit_buttons, "x10^", "(")):
                 self.widgets.entry_box.insert(tk.INSERT, "ANS")
 
             self.widgets.entry_box.insert(tk.INSERT, self.widgets.button_pressed.get())
@@ -55,6 +55,7 @@ class Inputs(object):
         # Special buttons:
         elif self.widgets.button_pressed.get() == "DEL":
             self.cursor_index = self.widgets.entry_box.index("insert")
+            # special cases for x10^ and ANS
             if self.widgets.entry_box.get()[self.cursor_index-1] == "S":
                 self.widgets.entry_box.delete(self.cursor_index-3, tk.END)
             elif self.widgets.entry_box.get()[self.cursor_index-1] == "^":
@@ -160,14 +161,14 @@ class Inputs(object):
                                     "4": u"\u2074", "5": u"\u2075", "6": u"\u2076", "7": u"\u2077",
                                     "8": u"\u2078", "9": u"\u2079"}
 
-        #making result ready to eval
+        # Making result ready to eval
         if "ANS" in self.from_entry_box:
             self.from_entry_box = self.from_entry_box.replace("ANS", self.final_result)
         if re.match(r"(^x10\^)", self.from_entry_box) is not None:
             self.from_entry_box = re.sub(r"(^x10\^)", r"1e", self.from_entry_box)
             self.widgets.entry_box.insert(0, "1")
         self.from_entry_box = re.sub(r"x10\^", r"e", self.from_entry_box)
-        # Adds a * for multiplying by a bracket (no x required on left of brackets)
+        # Adds a * for multiplying by a bracket if no x on left
         self.from_entry_box = re.sub(self.left_bracket_without_x_symbol, "\g<1>*\g<2>", self.from_entry_box)
         self.from_entry_box = self.from_entry_box.replace("x", "*")
 
@@ -183,7 +184,7 @@ class Inputs(object):
                 self.counting_decimal_places = re.search(r"\d+\.?0*([1-9]*)", self.pretty_final_result)
                 self.decimal_places = "{:." + str(len(self.counting_decimal_places.group(1))-1) + "e}"
                 self.pretty_final_result = self.decimal_places.format(float(self.pretty_final_result))
-            # changing e to x10^ and adding unicode "superscript"
+            # Changing e to x10^ and adding unicode "superscript"
             if re.search(self.exp_style_number, self.pretty_final_result) is not None:
                 self.looking_for_exp = re.search(self.exp_style_number, self.pretty_final_result)
                 self.times_ten_to_the = []

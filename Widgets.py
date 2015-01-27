@@ -42,6 +42,7 @@ class Widgets(object):
                 self.button_dict[b] = tk.Button(self.buttons_frame, text=b, height=2, width=4, font=("TkDefaultFont", 20))
             self.button_dict[b].grid(row=self.r, column=self.c)
 
+            # These colour settings don't work on Mac
             if b == "DEL" or b == "AC":
                 self.button_dict[b].configure(bg="orange red")
             elif b == "/":
@@ -52,7 +53,6 @@ class Widgets(object):
                 self.button_dict[b].configure(bg="gray")
             elif b == "<" or b == ">":
                 self.button_dict[b].configure(bg="SteelBlue3")
-
             else:
                 self.button_dict[b].configure(bg="gray52")
 
@@ -61,7 +61,7 @@ class Widgets(object):
                 self.c = 0
                 self.r -= 1
 
-            def make_lambda(x): #to make lambda work with for loop
+            def make_lambda(x):  # to make lambda work with for loop
                 return lambda event: self.key_function(x)
             self.button_dict[b].bind("<Button-1>", make_lambda(b))
 
@@ -81,12 +81,12 @@ class Widgets(object):
         self.entry_box.bind("<Key>", lambda event: self.keyboard(event))
         self.entry_box.bind("<Shift-Key>", lambda event: self.keyboard(event))
 
+
     def key_function(self, label):
         self.label = label
         self.button_pressed.set(self.label)
-        #print "button pressed is: %r, self.label is: %r" % (self.button_pressed.get(), self.label)
         self.button_pressed.set(label)
-        self.button_go = True  # NB this is not the same buttons_go as in init?
+        self.button_go = True
 
 
     def keyboard(self,event):
@@ -94,14 +94,14 @@ class Widgets(object):
         print "keyboard_input %r" % self.keyboard_input
         if self.keyboard_input in self.button_dict:
             self.key_function(self.keyboard_input)
-            return "break"
+            return "break"  # NB this stops an event in tkinter - so that the Entry box doesn't insert the key
         elif self.keyboard_input in self.keysym_guide:
             self.key_function(self.keysym_guide[self.keyboard_input])
             return "break"
         elif self.keyboard_input in self.shift_keysym_guide:
             self.key_function(self.shift_keysym_guide[self.keyboard_input])
             return "break"
-        elif self.keyboard_input == "asterisk":
+        elif self.keyboard_input == "asterisk":  # This is not in the dict because comes under both Key and Shift-Key
             self.key_function("x")
             return "break"
         else:
@@ -125,7 +125,7 @@ class Widgets(object):
                           "/x10^", "/)", "(/", "x10^/", "()", "+/", "-/",
                           "-x10^", "+x10^", "-)", "+)", "(x10^", ")x10^",
                           "Nonex", "None/", "None)", ".+", ".-"
-                                ]
+                            ]
         self.number_has_dot = re.compile(r"""
                                 \d* # 0 or more digits
                                 \. # escaped dot
@@ -181,6 +181,7 @@ class Widgets(object):
                 print "function at the end of the line"
                 return 1
             elif self.equals_was_last_key_pressed is True and self.key == "=":
+                # Checking if the Entry box contains a function - alright to put ANS at the start and keep going if so
                 self.function_in_box = filter(lambda x: x in self.most_recent_in_entrybox, self.function_characters)
                 if len(self.function_in_box)>0:
                     print "doing ANS sums, = and = is ok"
