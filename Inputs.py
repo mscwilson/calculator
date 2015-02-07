@@ -86,7 +86,7 @@ class Inputs(object):
                 self.widgets.entry_box.focus()
                 self.entry_focus = True
                 #print "entry focus is %r" % self.entry_focus
-            else:
+            elif len(self.widgets.entry_box.get())>0:
                 # set this cursor_index to wherever the cursor is right now
                 self.cursor_index = self.widgets.entry_box.index("insert")
                 # Jumps over ANS as if one character

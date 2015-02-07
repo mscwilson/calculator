@@ -1,7 +1,7 @@
 Calculator
 ==========
 
-This is a fairly basic calculator made with Python 2.7 and Tkinter.
+This is a fairly basic calculator made with Python 2.7 and Tkinter (Tcl/Tk 8.5).
 I wanted it to have everything I use on my physical Casio calculator.
 
 Features include:
@@ -12,4 +12,4 @@ Features include:
 - Entry by button press or keyboard
 - Delete and move cursor buttons for editing input
 
-Because it's Tkinter it looks really ugly on Mac. Still works though!
+Because it's Tkinter it looks better on Windows than Mac.
