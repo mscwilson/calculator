@@ -47,7 +47,7 @@ class MainWindow(tk.Frame):
             if self.parent.focus_get() == self.button.result:  # Returns the focus to root after using move buttons
                 self.parent.focus_set()
             print "take_inputs finished"
-        self.after(100, self.take_inputs)
+        self.after(50, self.take_inputs)  # Waiting 50ms
 
 
 def main():

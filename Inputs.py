@@ -55,14 +55,15 @@ class Inputs(object):
         # Special buttons:
         elif self.widgets.button_pressed.get() == "DEL":
             self.cursor_index = self.widgets.entry_box.index("insert")
+            if len(self.widgets.entry_box.get())>0:
             # special cases for x10^ and ANS
-            if self.widgets.entry_box.get()[self.cursor_index-1] == "S":
-                self.widgets.entry_box.delete(self.cursor_index-3, tk.END)
-            elif self.widgets.entry_box.get()[self.cursor_index-1] == "^":
-                self.widgets.entry_box.delete(self.cursor_index-4, tk.END)
-            else:
-                self.widgets.entry_box.delete(self.cursor_index-1)
-                self.widgets.equals_was_last_key_pressed = False
+                if self.widgets.entry_box.get()[self.cursor_index-1] == "S":
+                    self.widgets.entry_box.delete(self.cursor_index-3, tk.END)
+                elif self.widgets.entry_box.get()[self.cursor_index-1] == "^":
+                    self.widgets.entry_box.delete(self.cursor_index-4, tk.END)
+                else:
+                    self.widgets.entry_box.delete(self.cursor_index-1)
+                    self.widgets.equals_was_last_key_pressed = False
 
         elif self.widgets.button_pressed.get() == "AC":
             self.widgets.entry_box.delete(0, tk.END)
