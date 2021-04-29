@@ -7,8 +7,7 @@ I wrote this app as a personal challenge when teaching myself Python 2.7, in 201
 
 This was my first ever coding project! I had completed the [Codecademy](https://www.codecademy.com/learn) Python course but didn't know anything about clean code, testing, or how to structure my work. I soon realised that making an iOS app would be rather ambitious, so I decided to leave it at this.
 
-The calculator:
-- Has the standard operations <code>+</code>, <code>-</code>, <code>*</code> and <code>/</code>, plus brackets, plus a <code>x10^n</code> aka EXP button. For example, <code>22000000</code> can be entered as <code>2.2</code> <code>x10^n</code> <code>7</code>. Similarly, <code>0.00003</code> can be entered as <code>3</code> <code>x10^n</code> <code>-5</code>.
+- The calculator has the standard operations <code>+</code>, <code>-</code>, <code>*</code> and <code>/</code>, plus brackets, plus a <code>x10^n</code> aka EXP button. For example, <code>22000000</code> can be entered as <code>2.2</code> <code>x10^n</code> <code>7</code>. Similarly, <code>0.00003</code> can be entered as <code>3</code> <code>x10^n</code> <code>-5</code>.
 - Enter numbers and operations using mouse clicks/buttons, or keyboard.
 - The whole calculation is visible in the display. You can edit before getting the answer, using the arrow keys and <code>DEL</code>.
 - Once an answer has been obtained, the <code>ANS</code> button now holds the most recent answer. For example, <code>6 * 4</code> <code>=</code> <code>24</code>. Then <code>ANS + 1</code> <code>=</code> <code>25</code>. Continuing to press the <code>=</code> key will keep adding 1 as the number stored in <code>ANS</code> is updated.
